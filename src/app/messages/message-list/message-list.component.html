@@ -6,15 +6,15 @@
           <span class="title pull-left">Messages</span>
         </div>
       </div>
-      <div class="panel-body">
+      <div class="panel-body" *ngIf="messages">
         <div class="row">
           <div class="col-xs-12">
-            <cms-message-item />
+            <cms-message-item *ngFor="let messageModel of messages" [message]="messageModel" />
           </div>
         </div>
       </div>
       <div class="panel-footer">
-        <cms-message-edit />
+        <cms-message-edit (addMessageEvent)="onAddMesssage($event)" />
       </div>
     </div>
   </div>
