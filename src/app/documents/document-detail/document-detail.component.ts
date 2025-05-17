@@ -1,11 +1,15 @@
-import { Component } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { Component, Input, OnInit } from '@angular/core';
+import { Document } from '../document.model';
 
 @Component({
   selector: 'cms-document-detail',
-  imports: [],
+  imports: [CommonModule],
   templateUrl: './document-detail.component.html',
-  styleUrl: './document-detail.component.css'
+  styleUrl: './document-detail.component.css',
 })
-export class DocumentDetailComponent {
+export class DocumentDetailComponent implements OnInit {
+  @Input() document!: Document;
 
+  ngOnInit() {}
 }
