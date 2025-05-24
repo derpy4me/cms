@@ -3,6 +3,7 @@ import { Component } from '@angular/core';
 import { MessageEditComponent } from '../message-edit/message-edit.component';
 import { MessageItemComponent } from '../message-item/message-item.component';
 import { Message } from '../message.model';
+import { MessageService } from '../message.service';
 
 @Component({
   selector: 'cms-message-list',
@@ -11,14 +12,14 @@ import { Message } from '../message.model';
   styleUrl: './message-list.component.css',
 })
 export class MessageListComponent {
-  messages: Message[] = [
-    new Message('2', 'Test', 'This is a simple test. Ignore', 'Some Rando'),
-    new Message('3', 'Cat in', 'I can show you a thing', 'Thing One'),
-    new Message('4', 'A Hat', 'Or two', 'Thing Two'),
-    new Message('5', 'Hey;)', 'What you doing for dinner?', 'Some Rando'),
-  ];
+  messages: Message[] = [];
 
-  onAddMesssage(message: Message) {
-    this.messages.push(message);
+  constructor(private messageService: MessageService) {}
+
+  ngOnInit() {
+    this.messages = this.messageService.getMessages();
+    this.messageService.messageChangedEvent.subscribe((messages: Message[]) => {
+      this.messages = messages;
+    });
   }
 }
