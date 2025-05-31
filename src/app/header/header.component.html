@@ -5,9 +5,9 @@
     </div>
     <div class="collapse navbar-collapse">
       <ul class="nav navbar-nav">
-        <li><a class="nav-link" (click)="onSelected('documents')" role="button">Documents</a></li>
-        <li><a class="nav-link" (click)="onSelected('messages')" role="button">Messages</a></li>
-        <li><a class="nav-link" (click)="onSelected('contacts')" role="button">Contacts</a></li>
+        <li routerLinkActive="active"><a class="nav-link" role="button" routerLink="/documents">Documents</a></li>
+        <li routerLinkActive="active"><a class="nav-link" role="button" routerLink="/messages">Messages</a></li>
+        <li routerLinkActive="active"><a class="nav-link" role="button" routerLink="/contacts">Contacts</a></li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
         <li class="dropdown" appDropdown>
