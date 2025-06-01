@@ -1,5 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
+import { RouterLink } from '@angular/router';
 
 import { Contact } from '../contact.model';
 import { ContactService } from '../contact.service';
@@ -7,7 +8,7 @@ import { ContactItemComponent } from './contact-item/contact-item.component';
 
 @Component({
   selector: 'cms-contact-list',
-  imports: [CommonModule, ContactItemComponent],
+  imports: [CommonModule, ContactItemComponent, RouterLink],
   templateUrl: './contact-list.component.html',
   styleUrl: './contact-list.component.css',
 })
@@ -18,10 +19,8 @@ export class ContactListComponent implements OnInit {
 
   ngOnInit() {
     this.contacts = this.contactService.getContacts();
-  }
-
-  onContactSelected(contact: Contact) {
-    // console.log(contact);
-    this.contactService.contactSelectedEvent.emit(contact);
+    this.contactService.contactChangedEvent.subscribe((contacts: Contact[]) => {
+      this.contacts = contacts;
+    });
   }
 }

@@ -1,14 +1,14 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
+import { RouterOutlet } from '@angular/router';
 
-import { ContactDetailComponent } from './contact-detail/contact-detail.component';
 import { ContactListComponent } from './contact-list/contact-list.component';
 import { Contact } from './contact.model';
 import { ContactService } from './contact.service';
 
 @Component({
   selector: 'cms-contacts',
-  imports: [ContactDetailComponent, ContactListComponent, CommonModule],
+  imports: [ContactListComponent, CommonModule, RouterOutlet],
   templateUrl: './contacts.component.html',
   styleUrl: './contacts.component.css',
 })
