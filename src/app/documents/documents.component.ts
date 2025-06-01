@@ -1,5 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
+import { RouterOutlet } from '@angular/router';
 import { DocumentDetailComponent } from './document-detail/document-detail.component';
 import { DocumentListComponent } from './document-list/document-list.component';
 import { Document } from './document.model';
@@ -7,7 +8,12 @@ import { DocumentService } from './document.service';
 
 @Component({
   selector: 'cms-documents',
-  imports: [DocumentListComponent, DocumentDetailComponent, CommonModule],
+  imports: [
+    DocumentListComponent,
+    DocumentDetailComponent,
+    CommonModule,
+    RouterOutlet,
+  ],
   templateUrl: './documents.component.html',
   styleUrl: './documents.component.css',
 })
