@@ -1,6 +1,8 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { RouterLink } from '@angular/router';
+import { Subscription } from 'rxjs';
+
 import { Document } from '../document.model';
 import { DocumentService } from '../document.service';
 import { DocumentItemComponent } from './document-item/document-item.component';
@@ -13,14 +15,19 @@ import { DocumentItemComponent } from './document-item/document-item.component';
 })
 export class DocumentListComponent {
   documents: Document[] = [];
+  private subscription!: Subscription;
   constructor(private documentService: DocumentService) {}
 
   ngOnInit() {
     this.documents = this.documentService.getDocuments();
-    this.documentService.documentChangedEvent.subscribe(
+    this.subscription = this.documentService.documentChangedEvent.subscribe(
       (documents: Document[]) => {
         this.documents = documents;
       }
     );
+  }
+
+  ngOnDestroy() {
+    this.subscription.unsubscribe();
   }
 }
