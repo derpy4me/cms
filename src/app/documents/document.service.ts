@@ -58,7 +58,7 @@ export class DocumentService {
     if (!document) {
       return;
     }
-    const newId = this.maxDocumentId++;
+    const newId = ++this.maxDocumentId;
     newDocument.id = String(newId);
     this.documents.push(newDocument);
     this.documentChangedEvent.next(this.documents.slice());
