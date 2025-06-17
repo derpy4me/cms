@@ -1,3 +1,4 @@
+import { CdkDropListGroup } from '@angular/cdk/drag-drop';
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
@@ -8,7 +9,7 @@ import { ContactService } from './contact.service';
 
 @Component({
   selector: 'cms-contacts',
-  imports: [ContactListComponent, CommonModule, RouterOutlet],
+  imports: [ContactListComponent, CommonModule, RouterOutlet, CdkDropListGroup],
   templateUrl: './contacts.component.html',
   styleUrl: './contacts.component.css',
 })

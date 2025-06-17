@@ -1,15 +1,22 @@
+import { CdkDrag, CdkDropList } from '@angular/cdk/drag-drop';
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { RouterLink } from '@angular/router';
-
 import { Subscription } from 'rxjs';
+
 import { Contact } from '../contact.model';
 import { ContactService } from '../contact.service';
 import { ContactItemComponent } from './contact-item/contact-item.component';
 
 @Component({
   selector: 'cms-contact-list',
-  imports: [CommonModule, ContactItemComponent, RouterLink],
+  imports: [
+    CommonModule,
+    ContactItemComponent,
+    RouterLink,
+    CdkDropList,
+    CdkDrag,
+  ],
   templateUrl: './contact-list.component.html',
   styleUrl: './contact-list.component.css',
 })

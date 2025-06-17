@@ -44,13 +44,14 @@ export class ContactService {
 
   getMaxId(): number {
     let maxId = 0;
-    const contact = this.contacts.reduce((prev, current) =>
-      prev && prev.id > current.id ? prev : current
-    );
-    if (contact) {
-      maxId = Number(contact.id);
+    if (this.contacts && this.contacts.length > 0) {
+      this.contacts.forEach((contact) => {
+        const id = Number(contact.id);
+        if (id > maxId) {
+          maxId = id;
+        }
+      });
     }
-
     return maxId;
   }
 
@@ -58,7 +59,7 @@ export class ContactService {
     if (!newContact) {
       return;
     }
-    const newId = this.maxContactId++;
+    const newId = ++this.maxContactId;
     newContact.id = String(newId);
     this.contacts.push(newContact);
     this.contactChangedEvent.next(this.contacts.slice());

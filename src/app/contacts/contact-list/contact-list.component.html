@@ -11,8 +11,10 @@
   </div>
   <div class="panel-body">
     <div class="row">
-      <div class="col-xs-12">
-        <cms-contact-item *ngFor="let contactModel of contacts" [contact]="contactModel" />
+      <div class="col-xs-12" cdkDropList id="allContactsListContainer" [cdkDropListData]="contacts"
+        [cdkDropListConnectedTo]="['groupListContainer']">
+        <cms-contact-item *ngFor="let contactModel of contacts" [contact]="contactModel" cdkDrag
+          [cdkDragData]="contactModel" />
       </div>
     </div>
   </div>
