@@ -1,6 +1,6 @@
-import { EventEmitter, Injectable, Output } from '@angular/core';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { EventEmitter, Injectable } from '@angular/core';
 import { Subject } from 'rxjs';
-import { MOCKDOCUMENTS } from './MOCKDOCUMENTS';
 
 import { Document } from './document.model';
 
@@ -8,14 +8,25 @@ import { Document } from './document.model';
   providedIn: 'root',
 })
 export class DocumentService {
-  @Output() selectedDocumentEvent = new EventEmitter<Document>();
+  selectedDocumentEvent = new EventEmitter<Document>();
   documentChangedEvent = new Subject<Document[]>();
-  documents: Document[];
-  maxDocumentId: number;
+  documents: Document[] = [];
+  maxDocumentId!: number;
+  private firebaseUrl =
+    'https://wdd-430-cms-f2e1f-default-rtdb.firebaseio.com/documents.json';
 
-  constructor() {
-    this.documents = MOCKDOCUMENTS;
-    this.maxDocumentId = this.getMaxId();
+  constructor(private http: HttpClient) {
+    this.http.get<Document[]>(this.firebaseUrl).subscribe(
+      (documents: Document[]) => {
+        this.documents = documents;
+        this.maxDocumentId = this.getMaxId();
+        this.documents.sort((a, b) => (a.name < b.name ? -1 : 1));
+        this.documentChangedEvent.next(this.documents.slice());
+      },
+      (error: any) => {
+        console.error(error);
+      }
+    );
   }
 
   getDocuments(): Document[] {
@@ -39,7 +50,7 @@ export class DocumentService {
       return;
     }
     this.documents.splice(pos, 1);
-    this.documentChangedEvent.next(this.documents.slice());
+    this.storeDocuments();
   }
 
   getMaxId(): number {
@@ -55,13 +66,13 @@ export class DocumentService {
   }
 
   addDocument(newDocument: Document) {
-    if (!document) {
+    if (!newDocument) {
       return;
     }
     const newId = ++this.maxDocumentId;
     newDocument.id = String(newId);
     this.documents.push(newDocument);
-    this.documentChangedEvent.next(this.documents.slice());
+    this.storeDocuments();
   }
 
   updateDocument(originalDoc: Document, newDoc: Document) {
@@ -78,6 +89,18 @@ export class DocumentService {
 
     this.documents[existingDocPos] = newDoc;
 
-    this.documentChangedEvent.next(this.documents.slice());
+    this.storeDocuments();
+  }
+
+  storeDocuments() {
+    const documentsJson = JSON.stringify(this.documents);
+    const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+    this.http
+      .put(this.firebaseUrl, documentsJson, {
+        headers: headers,
+      })
+      .subscribe(() => {
+        this.documentChangedEvent.next(this.documents.slice());
+      });
   }
 }
