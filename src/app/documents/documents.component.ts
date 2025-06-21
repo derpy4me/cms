@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
+
 import { DocumentDetailComponent } from './document-detail/document-detail.component';
 import { DocumentListComponent } from './document-list/document-list.component';
 import { Document } from './document.model';

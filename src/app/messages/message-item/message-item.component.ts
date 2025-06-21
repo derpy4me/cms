@@ -1,11 +1,12 @@
 import { Component, Input } from '@angular/core';
+import { RouterLink, RouterLinkActive } from '@angular/router';
 
 import { ContactService } from '../../contacts/contact.service';
 import { Message } from '../message.model';
 
 @Component({
   selector: 'cms-message-item',
-  imports: [],
+  imports: [RouterLink, RouterLinkActive],
   templateUrl: './message-item.component.html',
   styleUrl: './message-item.component.css',
 })
