@@ -6,6 +6,7 @@ import { Subscription } from 'rxjs';
 
 import { Contact } from '../contact.model';
 import { ContactService } from '../contact.service';
+import { ContactsFilterPipe } from '../contacts-filter.pipe';
 import { ContactItemComponent } from './contact-item/contact-item.component';
 
 @Component({
@@ -16,6 +17,7 @@ import { ContactItemComponent } from './contact-item/contact-item.component';
     RouterLink,
     CdkDropList,
     CdkDrag,
+    ContactsFilterPipe,
   ],
   templateUrl: './contact-list.component.html',
   styleUrl: './contact-list.component.css',
@@ -23,6 +25,7 @@ import { ContactItemComponent } from './contact-item/contact-item.component';
 export class ContactListComponent implements OnInit {
   contacts: Contact[] = [];
   private subscription!: Subscription;
+  term!: string;
 
   constructor(private contactService: ContactService) {}
 
@@ -33,6 +36,10 @@ export class ContactListComponent implements OnInit {
         this.contacts = contacts;
       }
     );
+  }
+
+  search(value: string) {
+    this.term = value;
   }
 
   ngOnDestroy() {
